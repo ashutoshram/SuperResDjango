@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block js %}
+
+  <script>
+
+       function request_server() {
+          // run ajax request
+          console.log('requesting status from /superres/query_status');
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+             if (this.readyState == 4 && this.status == 200) {
+               console.log('xhttp response = '+this.responseText);
+               var b = JSON.parse(this.responseText);
+               if (b.image_url != "") {
+                  document.getElementById("loading").innerHTML = '<h1> Done </h1>';
+                  document.getElementById("done").innerHTML = "<p>Image: <img src="+b.image_url+">";
+               } else {
+                  document.getElementById("loading").innerHTML = '<h1> Working... </h1>';
+               }
+               console.log(b.image_url);
+               
+             }
+          };
+          xhttp.open("GET","/superres/query_status/", true);
+          xhttp.send();
+       }
+
+       function onload() {
+           setInterval(request_server, 1000);
+       }
+
+       window.onload = onload();
+       
+
+  </script>
+{% endblock %}
+
+{% block content %}
+
+  <div id="loading"> 
+           <img src="/static/loading.gif">
+  </div>
+  
+  <div id="done">
+  </div>
+  <!--
+    <div id="done" visibility="hidden">
+    <p>Image: <img src="{{ super_res_file_url }}" alt="Smiley face" height="{{super_res_height}}" width="{{super_res_width}}"> </p>
+    </div>
+   -->
+{% endblock %}
