@@ -87,4 +87,8 @@ local_settings.py
 
 .env
 db.sqlite3
-
+*.jpg
+*.JPG
+*.png
+*.swp
+migrations/

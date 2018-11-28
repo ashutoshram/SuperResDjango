@@ -5,9 +5,13 @@
 
   <script>
 
+       var intervalID;
        function request_server() {
           // run ajax request
           console.log('requesting status from /superres/query_status');
+          var token = document.getElementById("token").value;
+          console.log(token);
+          
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
              if (this.readyState == 4 && this.status == 200) {
@@ -16,19 +20,19 @@
                if (b.image_url != "") {
                   document.getElementById("loading").innerHTML = '<h1> Done </h1>';
                   document.getElementById("done").innerHTML = "<p>Image: <img src="+b.image_url+">";
+                  clearInterval(intervalID)
                } else {
-                  document.getElementById("loading").innerHTML = '<h1> Working... </h1>';
                }
                console.log(b.image_url);
                
              }
           };
-          xhttp.open("GET","/superres/query_status/", true);
+          xhttp.open("GET","/superres/query_status/?"+token, true);
           xhttp.send();
        }
 
        function onload() {
-           setInterval(request_server, 1000);
+           intervalID = setInterval(request_server, 1000);
        }
 
        window.onload = onload();
@@ -45,9 +49,6 @@
   
   <div id="done">
   </div>
-  <!--
-    <div id="done" visibility="hidden">
-    <p>Image: <img src="{{ super_res_file_url }}" alt="Smiley face" height="{{super_res_height}}" width="{{super_res_width}}"> </p>
-    </div>
-   -->
+
+  <input type="hidden" id="token" name="token" value="{{token}}">
 {% endblock %}
