@@ -18,8 +18,8 @@
                console.log('xhttp response = '+this.responseText);
                var b = JSON.parse(this.responseText);
                if (b.image_url != "") {
-                  document.getElementById("loading").innerHTML = '<h1> Done </h1>';
-                  document.getElementById("done").innerHTML = "<p>Image: <img src="+b.image_url+">";
+                  document.getElementById("loading").innerHTML = "<h1> Here's your super-resolved image! </h1>";
+                  document.getElementById("done").innerHTML = "<img id=superres src="+b.image_url+">";
                   clearInterval(intervalID)
                } else {
                }
@@ -43,11 +43,11 @@
 
 {% block content %}
 
-  <div id="loading"> 
+  <div id="loading" style="text-align:center"> 
            <img src="/static/loading.gif">
   </div>
   
-  <div id="done">
+  <div id="done" style="text-align:center">
   </div>
 
   <input type="hidden" id="token" name="token" value="{{token}}">

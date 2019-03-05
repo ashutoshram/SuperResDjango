@@ -3,9 +3,14 @@
 {% load static %}
 
 {% block content %}
+<div style="text-align:center">
+  <h1> Perform a super-resolution on your images </h1>
+  
+  <h2> Upload an image and try it out! </h2>
   <form id="upload_action" method="post" enctype="multipart/form-data"> 
     {% csrf_token %}
     <input type="file" name="myfile">
-    <button id="button1" type="submit">Upload</button>
+    <button id="button1" type="submit">Super-Resolve!</button>
   </form>
+</div>
 {% endblock %}
